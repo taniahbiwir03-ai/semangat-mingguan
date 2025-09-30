@@ -2,49 +2,118 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Semangat Mingguan</title>
+  <title>Pantun + Tombol Nakal</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       font-family: Arial, sans-serif;
+      color: #222;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+      overflow: hidden;
+    }
+
+    #pantun {
+      font-size: 22px;
+      font-weight: bold;
+      white-space: pre-line;
       text-align: center;
-      background: #f5f5f5;
-      padding: 50px;
+      margin-bottom: 30px;
     }
-    h1 {
-      color: #ff4081;
+
+    #message {
+      display: none;
+      font-size: 26px;
+      font-weight: bold;
+      color: darkblue;
+      margin-top: 20px;
     }
-    button {
-      background: #ff4081;
+
+    #extraMessage {
+      display: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: darkgreen;
+      margin-top: 20px;
+    }
+
+    #funButton {
+      display: none;
+      padding: 12px 20px;
+      background: crimson;
       color: white;
-      padding: 10px 20px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background: #e91e63;
+      position: absolute;
+      bottom: 50px;
+      transition: all 0.4s ease;
     }
   </style>
 </head>
 <body>
-  <h1>💌 Semangat sampai Minggu depan, Anggi!</h1>
-  <p>Klik tombol di bawah untuk dapat pesan rahasia 👇</p>
-  <button onclick="pesanRahasia()">Klik Aku</button>
-  <p id="hasil" style="margin-top:20px; font-size:18px; color:#333;"></p>
+  <div id="pantun"></div>
+  <div id="message">🎉 Semangat sampai minggu depan Anggi 🎉</div>
+  <div id="extraMessage">🔥 Semangat ngejar simaannya, kamu kuat kamu hebat! 🔥</div>
+  <button id="funButton">Klik Aku!</button>
 
   <script>
-    function pesanRahasia() {
-      const pesan = [
-        "Aku sayang kamu ❤️",
-        "Jangan lupa makan ya 🍜",
-        "Semoga harimu indah 🌸",
-        "Kamu semangatku 💪",
-        "Ciee kangen aku ya? 😏"
-      ];
-      const random = pesan[Math.floor(Math.random() * pesan.length)];
-      document.getElementById("hasil").innerText = random;
+    const pantunText = 
+`makan nasi nyemilnya buah
+belum kenyang tambah odading
+kalau pantun kemarin kan udah
+coba sekarang aku ngoding`;
+
+    const pantunDiv = document.getElementById("pantun");
+    const funButton = document.getElementById("funButton");
+    const message = document.getElementById("message");
+    const extraMessage = document.getElementById("extraMessage");
+
+    let i = 0;
+
+    // efek ketikan pantun
+    function typePantun() {
+      if (i < pantunText.length) {
+        pantunDiv.innerHTML += pantunText.charAt(i);
+        i++;
+        setTimeout(typePantun, 70);
+      } else {
+        // setelah selesai ketik, munculkan tombol
+        funButton.style.display = "block";
+      }
     }
+
+    typePantun();
+
+    let clickCount = 0;
+
+    funButton.addEventListener("click", () => {
+      clickCount++;
+
+      if (clickCount === 1) {
+        funButton.style.left = "20%";
+        funButton.style.top = "20%";
+      } else if (clickCount === 2) {
+        funButton.style.left = "60%";
+        funButton.style.top = "40%";
+      } else if (clickCount === 3) {
+        funButton.style.left = "40%";
+        funButton.style.top = "70%";
+        message.style.display = "block";
+        extraMessage.style.display = "block";
+
+        // setelah 5 detik munculkan popup
+        setTimeout(() => {
+          alert("sorry baru belajar ngoding hehe");
+        }, 5000);
+      }
+    });
   </script>
 </body>
 </html>
